@@ -14,14 +14,15 @@
   :min-lein-version "2.0.0"
   :lein-release {:deploy-via :clojars}
 
-  :cljsbuild {:builds [{:compiler {:output-to "target/cljs-cookies-debug.js"}
-                        :source-paths ["src"]}
-                       {:compiler {:output-to "target/cljs-cookies.js"
-                                   :optimizations :advanced
-                                   :pretty-print false}
-                        :source-paths ["src"]}
+  :cljsbuild {:builds [
+                       ;{:compiler {:output-to "target/cljs-cookies-debug.js"}
+                        ;:source-paths ["src"]}
+                       ;{:compiler {:output-to "target/cljs-cookies.js"
+                                   ;:optimizations :advanced
+                                   ;:pretty-print false}
+                        ;:source-paths ["src"]}
                        {:compiler {:output-to "target/cljs-cookies-test.js"
-                                   :optimizations :advanced
+                                   :optimizations :whitespace
                                    :pretty-print true}
-                        :source-paths ["test"]}]
+                        :source-paths ["src" "test"]}]
               :test-commands {"phantom" ["phantomjs" :runner "target/cljs-cookies-test.js"]}})

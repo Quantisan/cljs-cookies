@@ -1,7 +1,8 @@
 (ns cljs-cookies.core-test
   (:require-macros [cemerick.cljs.test :refer [is deftest]])
-  (:require [cljs-cookies.core :as c]
-            [cemerick.cljs.test :as t]))
+  (:require [cemerick.cljs.test :as t]
+            [cljs-cookies.core :as c]))
 
-(deftest one-test
-  (is (= 1 1)))
+(deftest set-get-cookie-test
+  (c/set-cookie :foo "bar")
+  (is (= "bar" (c/get-cookie :foo))))
