@@ -1,20 +1,31 @@
-(ns cljs-cookies.core)
+(ns cljs-cookies.core
+  (:import goog.net.Cookies))
 
-(def cookies goog.net.cookies)
+(def cookies (Cookies. js/document))
 
-(defn set-cookie [key value & {:keys [max-age]
-                               :or   {max-age -1}}]
+(defn set-cookie [k v & opts]
   "Sets a cookie.
 
    Options:
    max-age -- The max age in seconds (from now). Use -1 to set a session cookie. If not provided, the default is -1 (i.e. set a session cookie).
    "
-  (.set cookies (name key) value max-age))
+  (when-let [k (and (.isValidName cookies (name k)) (name k))]
+    (when (.isValidValue cookies v)
+      (let [{:keys [max-age path domain secure?]} (apply hash-map opts)]
+        (.set cookies k v max-age path domain secure?)))))
 
-(defn get-cookie [key]
+(defn get-cookie [k]
   "Returns the value for the first cookie with the given key."
-  (.get cookies (name key)))
+  (.get cookies (name k) nil))
 
 (defn remove-cookie [key]
   "Removes and expires a cookie."
   (.remove cookies (name key)))
+
+(defn enabled?
+  ([] (enabled? cookies))
+  ([c] (.isEnabled c)))
+
+(defn empty?
+  ([] (empty? cookies))
+  ([c] (.isEmpty c)))
