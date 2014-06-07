@@ -24,5 +24,5 @@
                        {:compiler {:output-to "target/cljs-cookies-test.js"
                                    :optimizations :whitespace
                                    :pretty-print true}
-                        :source-paths ["src" "test"]}]
-              :test-commands {"phantom" ["phantomjs" :runner "target/cljs-cookies-test.js"]}})
+                        :source-paths ["test"]}]
+              :test-commands {"slimer" ["slimerjs" :runner "target/cljs-cookies-test.js"]}})
